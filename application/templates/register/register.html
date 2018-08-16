@@ -1,0 +1,64 @@
+{% extends "layout.html" %} {% block body %}
+<form method="POST" action="{{ url_for('register') }}">
+  <h1>Rekisteröidy Saldoseuraajaan</h1>
+  <table width="500" style="max-width:100%;">
+    <tr>
+      <td colspan="2">
+        <hr />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td align="right">
+        {{ form.name }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.username.label }}
+      </td>
+      <td align="right">
+        {{ form.username }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.password.label }}
+      </td>
+      <td align="right">
+        {{ form.password }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.password2.label }}
+      </td>
+      <td align="right">
+        {{ form.password2 }}
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" align="right">
+        <input type="submit" value="Rekisteröidy" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center">
+        <font color="red">
+          {{ error }}
+          {% if form.password.errors %}
+          <ul class=errors>
+          {% for error in form.password.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+        </font>
+        <hr />
+      </td>
+    </tr>
+</form>
+{% endblock %}

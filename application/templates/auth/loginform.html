@@ -1,0 +1,47 @@
+{% extends "layout.html" %} {% block body %} 
+<form method="POST" action="{{ url_for('auth_login') }}">
+      <h1>Saldoseuraaja</h1>
+      <table width="500" style="max-width:100%;">
+            <tr>
+                  <td colspan="2">
+                        <hr />
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        {{ form.username.label }}
+                  </td>
+                  <td align="right">
+                        {{ form.username }}
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        {{ form.password.label }}
+                  </td>
+                  <td align="right">
+                        {{ form.password }}
+                  </td>
+            </tr>
+            <tr>
+                  <td colspan="2" align="right">
+                        <input type="submit" value="Kirjaudu sisään" />
+                  </td>
+            </tr>
+            <tr>
+                  <td colspan="2" align="center">
+                        <font color="red">{{ error }}</font>
+                        <hr />
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        Uusi käyttäjä?
+                  </td>
+                  <td align="right">
+                        <a href="{{ url_for('register') }}">Rekisteröidy</a>
+                  </td>
+            </tr>
+            
+</form>
+{% endblock %}
