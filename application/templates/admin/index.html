@@ -1,0 +1,49 @@
+{% extends "layout.html" %} {% block body %}
+<p>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <font color="green">
+        <ul class=flashes>
+            {% for message in messages %}
+            <li>
+                <i>{{ message }}</i>
+            </li>
+            {% endfor %}
+        </ul>
+    </font>
+    {% endif %} {% endwith %}
+</p>
+<table border="1">
+    <tr>
+        <th>Nimi/Alias/Lempinimi/...</th>
+        <th>Käyttäjätunnus</th>
+        <th>Onko käyttäjä aktiivisena?</th>
+        <th colspan="2" align="center">Toimintoja</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.active }}</td>
+        {% if user.active %}
+        <td>
+            <form method="POST" action="{{ url_for('user_set_active_status', user_id=user.id) }}">
+                <input type="submit" value="Deaktivoi" />
+            </form>
+        </td>
+        {% else %}
+        <td>
+            <form method="POST" action="{{ url_for('user_set_active_status', user_id=user.id) }}">
+                <input type="submit" value="Aktivoi" />
+            </form>
+        </td>
+        {% endif %}
+        <td>
+            <form method="POST" action="{{ url_for('user_reset_password', user_id=user.id) }}">
+                <input type="submit" value="Resetoi salasana" />
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

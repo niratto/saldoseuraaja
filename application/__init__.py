@@ -23,11 +23,13 @@ from application import views
 from application.auth import models
 from application.auth import views
 
-from application.register import models
+# from application.register import models
 from application.register import views
 
-from application.booking import models
+# from application.booking import models
 from application.booking import views
+
+from application.admin import views
 
 # kirjautuminen
 from application.auth.models import User

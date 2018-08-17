@@ -10,6 +10,5 @@ class RegistrationForm(FlaskForm):
     ])
     password2 = PasswordField("Vahvista salasana")
 
-
     class Meta:
         csrf = False

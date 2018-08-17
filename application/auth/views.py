@@ -12,32 +12,42 @@ def auth_login():
         return render_template("auth/loginform.html", form = LoginForm())
 
     form = LoginForm(request.form)
-    # mahdolliset validoinnit
-
-    user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
-    if not user:
+    
+    # katsotaan löytyykö kirjautuva käyttäjätunnus tietokannasta
+    user = User.query.filter_by(username=form.username.data).first()
+    # katsotaan, täsmääkö käyttäjän suolatu salasana vs. selkokielisenä annettu salasana
+    pwd_ok = user.check_password(form.password.data)
+    
+    # jos käyttäjää ei löydy tai salasana ei täsmää, niin ilmoitetaan herja käyttäjälle
+    if not user or not pwd_ok:
         return render_template("auth/loginform.html", form = form,
                                error = "Antamasi tunnus tai salasana ei kelpaa!")
 
 
     login_user(user)
 
-    m = Moneysource("Käteinen","")
-    m.acc_id_fk = current_user.id
-    
-    exists = Moneysource.query.filter_by(acc_id_fk=current_user.id).first()
-    
-    # katsotaan onko käyttäjän money_source -taulussa mitään merkintää kirjautumisen ohessa
-    # jos merkintöjä ei vielä ole, niin luodaan kirjautumisen ohessa yksi merkintä, jolle 
-    # annetaan arvoksi (ms_name): Käteinen
-    # Ideana tässä on se, että kaikilla on joskus käteistä :) ja siksi käyttäjällä on hyvä
-    # olla heti luomisvaiheessa yksi rahanlähde ja olkoon se tässä käteinen.
-    # Käyttäjä voi sitten myöhemmässä vaiheessa lisäillä lisää rahalähteitään...
-    if not exists:
-        db.session().add(m)
-        db.session.commit()
+    # katsotaan onko käyttäjä admin vai ei
+    adminExists = User.query.filter_by(username=form.username.data, admin=True).first()
+
+    if adminExists:
+        return redirect(url_for("admin_index"))
+    else:
+        # katsotaan onko käyttäjän money_source -taulussa mitään merkintää kirjautumisen ohessa
+        # jos merkintöjä ei vielä ole, niin luodaan kirjautumisen ohessa yksi merkintä, jolle 
+        # annetaan arvoksi (ms_name): Käteinen
+        # Ideana tässä on se, että kaikilla on joskus käteistä :) ja siksi käyttäjällä on hyvä
+        # olla heti luomisvaiheessa yksi rahanlähde ja olkoon se tässä käteinen.
+        # Käyttäjä voi sitten myöhemmässä vaiheessa lisäillä lisää rahalähteitään...
+        m = Moneysource("Käteinen","")
+        m.acc_id_fk = current_user.id
         
-    return redirect(url_for("booking_index"))
+        exists = Moneysource.query.filter_by(acc_id_fk=current_user.id).first()
+        
+        if not exists:
+            db.session().add(m)
+            db.session.commit()
+            
+        return redirect(url_for("booking_index"))
 
 @app.route("/auth/logout")
 def auth_logout():
