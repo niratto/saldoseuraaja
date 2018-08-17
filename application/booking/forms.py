@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, StringField, validators
 
-class BookingForm(FlaskForm):
-    name = StringField("Task name", [validators.Length(min=2)])
-    done = BooleanField("Done")
+class MoneysourceForm(FlaskForm):
+    name = StringField("Rahalähteen nimi:", [validators.DataRequired()])
+    info = StringField("Lisätietoja:")
 
     class Meta:
         csrf = False

@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Muuta käyttäjän tietoja</h1>
+<a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+<br />
+<form method="POST" action="{{ url_for('edit_user') }}">  
+  <table width="80%" style="max-width:100%;">
+    <tr>
+      <td colspan="2">
+        <hr />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td align="right">
+        {{ form.name }}
+        <br /><i>Arvo tällä hetkellä: <b>{{ current_user.name }}</b></i>
+        <br><i>(HUOM! Jos jätät tämän arvon tyhjäksi, <br />niin nykyinen nimi/alias säilyy.)</i>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.password.label }}
+      </td>
+      <td align="right">
+        {{ form.password }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.password2.label }}
+      </td>
+      <td align="right">
+        {{ form.password2 }}
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2" align="right">
+        <input type="submit" value="Muuta tietoja" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center">
+        <font color="red">
+          {{ error }}
+          {% if form.password.errors %}
+          <ul class=errors>
+          {% for error in form.password.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+        </font>
+        <hr />
+      </td>
+    </tr>
+</form>
+{% endblock %}

@@ -15,6 +15,7 @@ def auth_login():
     
     # katsotaan löytyykö kirjautuva käyttäjätunnus tietokannasta
     user = User.query.filter_by(username=form.username.data).first()
+    active_user = User.query.filter_by(username=form.username.data,active=True).first()
     # katsotaan, täsmääkö käyttäjän suolatu salasana vs. selkokielisenä annettu salasana
     pwd_ok = user.check_password(form.password.data)
     
@@ -22,7 +23,9 @@ def auth_login():
     if not user or not pwd_ok:
         return render_template("auth/loginform.html", form = form,
                                error = "Antamasi tunnus tai salasana ei kelpaa!")
-
+    elif not active_user:
+        return render_template("auth/loginform.html", form = form,
+                               error = "Ylläpitäjä on deaktivoinut käyttäjätunnuksesi!")
 
     login_user(user)
 

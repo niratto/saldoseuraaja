@@ -73,6 +73,70 @@ viittaus USer-tauluun user 1...n Saldo
 viittaus money_source-tauluun money_source 1...n Saldo
 
 
-
-
 * lopullisessa toteutuksessa on tavoitteena se, että salasana on kryptattuna tietokannassa
+
+.......
+
+Toiminnot ja rajoitukset sivuittain:
+
+1. Kirjautumissivu (auth/login)
+
+- Käyttäjätunnus ei saa olla tyhjä
+- Salasana ei saa olla tyhjä
+- Jos käyttäjän tunnus tai salasana ei kirjautuessa täsmää käyttäjälle näytetään asiasta virheilmoitus.
+- jos ylläpitäjä on deaktivoinut käyttäjän, niin kirjautumisvaiheessa näkyy käyttäjälle virheilmoitus (tunnus ja salasana oikein)
+- user-tason käyttäjä jatkaa kirjautumisen jälkeen booking/ -sivulle
+- admin-tason käyttäjä jatkaa kirjautumisen jälkeen admin/ -sivulle
+- käyttäjä voi rekisteröityä
+
+2. Rekisteröityminen
+
+- nimi/alias ei saa olla tyhjä
+- käyttäjätunnus ei saa olla tyhjä
+- salasana ei saa olla tyhjä
+- vahvista salasanan tulee olla identtinen salasanan kanssa
+- jos tietokannassa ei ole admin-tason käyttäjää, niin ensimmäinen rekisteröityminen on admin-tason rekisteröityminen (näitä voi tehdä vain kerran; ellei sitten tuhoa tietokantaa välissä)
+- jos tietokannassa on admin-tason käyttäjä, niin rekisteröitymiset ovat user-tason rekisteröitymisiä
+- admin ja user-tason käyttäjien ero tietokannassa Account-taulussa on se, että adminilla Admin-sarake on true ja käyttäjällä False
+
+3. Admin-sivu
+
+Admin-sivulla (kirjautuminen admin-käyttäjänä) voi
+- deaktivoida käyttäjän
+- nollata käyttäjän salasanan (siitä tulee käyttäjätunnus väärinpäin)
+
+4. booking-sivu
+
+Tämä on sivu, jonne tulee lopulta transaktioiden, saldojen yms. lisääminen. Tällä hetkellä 17.8.2018 sivulla on
+
+- käyttäjän tietojen muokkaaminen
+- rahalähteen lisäys, muokkaus ja poisto
+
+5. user/edit -sivu
+
+Tällä sivulla käyttäjä voi muokata aliastaan sekä päivittää salasanansa.
+
+Jos alias on tyhjä ja painetaan "muuta tietoja", niin alias ei muutu tyhjäksi, vaan vanha arvo pidetään.
+
+Jos salasana on tyhjä ja painetaan "muuta tietoja", niin salasana ei muutu tyhjäksi, vaan vanha arvo pidetään.
+
+Ym. tapauksissa ainoastaan jos kenttiin laitetaan arvoja, niin ne päivitetään tietokantaan.
+
+salasanojen pitää täsmätä keskenään
+
+6. source -sivu
+
+Täällä käyttäjä näkee omat henk. koht. rahalähteensä ja voi 
+- poistaa
+- muokata rahalähdettä (WIP @ 17.8.2018)
+
+Tämän lisäksi käyttäjä voi lisätä uuden rahalähteen (linkki: lisää rahalähde)
+
+7. source/add -sivu
+
+Täällä käyttäjä voi lisätä uuden rahalähteen
+
+- nimi ei saa olla tyhjä
+- lisätietoja on valinnainen kenttä
+
+Lisää rahalähde --> vie uuden tietueen kantaan Moneysource-tauluun

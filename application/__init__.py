@@ -31,6 +31,8 @@ from application.booking import views
 
 from application.admin import views
 
+from application.user import views
+
 # kirjautuminen
 from application.auth.models import User
 from os import urandom
