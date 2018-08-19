@@ -2,6 +2,8 @@
 
 Saldoseuraaja
 
+heroku: https://dashboard.heroku.com/apps/tsoha-saldoseuraaja
+
 Saldoseuraajan avulla käyttäjä voi tallentaa ja analysoida päivittäistä rahankäyttöään.
 
 Toimintoja, joita voi tehdä ennen kuin on kirjautunut:
