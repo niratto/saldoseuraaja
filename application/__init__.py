@@ -20,18 +20,29 @@ db = SQLAlchemy(app)
 
 from application import views
 
+# Autentikaatio, käyttäjänhallinta
 from application.auth import models
 from application.auth import views
 
-# from application.register import models
+# Reksiteröinti
 from application.register import views
 
-# from application.booking import models
+# Booking, eli sovelluksen "pääsivu"
 from application.booking import views
 
+# admin-osuus
 from application.admin import views
 
+# Käyttäjän editointi (booking-sivulta)
 from application.user import views
+
+# Rahalähteen lisääminen
+from application.moneysource import models
+from application.moneysource import views
+
+# transaktion (meno/tulo) lisääminen
+from application.transaction import models
+from application.transaction import views
 
 # kirjautuminen
 from application.auth.models import User

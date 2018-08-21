@@ -1,0 +1,45 @@
+{% extends "layout.html" %} {% block body %}
+
+<h1>Käyttäjän rahalähteet</h1>
+<a href="{{ url_for('add_moneysource') }}">Lisää rahalähde</a>
+<br />
+<a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+<hr />
+<table border="1">
+    <tr>
+        <th>Rahalähteen nimi</th>
+        <th>Lisätietoja</th>
+        <th colspan="2" align="center">
+            Toimintoja
+            <br /> {% with messages = get_flashed_messages() %} {% if messages %}
+            <font color="green">
+                <ul class=flashes>
+                    {% for message in messages %}
+                    <li>
+                        <i>{{ message }}</i>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </font>
+            {% endif %} {% endwith %}
+        </th>
+    </tr>
+    {% for source in sources %}
+    <tr>
+        <td>{{ source.ms_name }}</td>
+        <td>{{ source.ms_extrainfo }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('modify_moneysource', source_id=source.ms_id_pk) }}">
+                <input type="submit" value="Muokkaa" />
+            </form>
+        </td>
+        <td>
+            <form method="POST" OnClick="return confirm('Oletko varma että haluat poistaa rahalähteen?')" action="{{ url_for('remove_moneysource', source_id=source.ms_id_pk) }}">
+                <input type="submit" value="Poista" />
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

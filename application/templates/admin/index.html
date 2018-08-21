@@ -38,7 +38,7 @@
         </td>
         {% endif %}
         <td>
-            <form method="POST" action="{{ url_for('user_reset_password', user_id=user.id) }}">
+            <form method="POST" OnClick="return confirm('Oletko varma että haluat nollata käyttäjän salasanan?')" action="{{ url_for('user_reset_password', user_id=user.id) }}">
                 <input type="submit" value="Resetoi salasana" />
             </form>
         </td>

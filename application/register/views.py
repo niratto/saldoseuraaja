@@ -2,7 +2,7 @@ from application import app, db
 from flask import redirect, render_template, request, url_for
 from application.register.forms import RegistrationForm
 from application.auth.models import User
-from application.booking.models import Moneysource
+from application.moneysource.models import Moneysource
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():

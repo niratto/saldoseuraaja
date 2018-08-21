@@ -17,21 +17,21 @@
       border-bottom: 1px solid #ddd;
     }
   </style>
-</head>
+</head >
 
-<body>
-  {% if current_user.is_authenticated %}
+      <body>
+        {% if current_user.is_authenticated %}
   <p>
-    Kirjautunut nimellä {{ current_user.name }}.
+          Kirjautunut nimellä {{ current_user.name }}.
     <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
-  </p>
+        </p>
 
 
-  {% endif %} {% block body %}
+        {% endif %} {% block body %}
   <p>
-    Content.
+          Content.
   </p>
-  {% endblock %}
-</body>
+        {% endblock %}
+      </body>
 
-</html>
+</html >
