@@ -1,17 +1,17 @@
 {% extends "layout.html" %} {% block body %} 
 <form method="POST" action="{{ url_for('auth_login') }}">
       <h1>Saldoseuraaja</h1>
-      <table width="500" style="max-width:100%;">
+      <table width="80%">
             <tr>
                   <td colspan="2">
                         <hr />
                   </td>
             </tr>
             <tr>
-                  <td>
+                  <td width="30%">
                         {{ form.username.label }}
                   </td>
-                  <td align="right">
+                  <td>
                         {{ form.username }}
                   </td>
             </tr>
@@ -19,12 +19,13 @@
                   <td>
                         {{ form.password.label }}
                   </td>
-                  <td align="right">
+                  <td>
                         {{ form.password }}
                   </td>
             </tr>
             <tr>
-                  <td colspan="2" align="right">
+                  <td></td>
+                  <td>
                         <input type="submit" value="Kirjaudu sisään" />
                   </td>
             </tr>
@@ -38,7 +39,7 @@
                   <td>
                         Uusi käyttäjä?
                   </td>
-                  <td align="right">
+                  <td>
                         <a href="{{ url_for('register') }}">Rekisteröidy</a>
                   </td>
             </tr>

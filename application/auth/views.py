@@ -3,7 +3,6 @@ from flask_login import login_user, logout_user, current_user
 
 from application import app, db
 from application.moneysource.models import Moneysource
-
 from application.auth.models import User
 from application.auth.forms import LoginForm
 

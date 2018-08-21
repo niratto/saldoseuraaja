@@ -1,11 +1,38 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block body %}
 
-{% block body %}
-
-<a href="{{ url_for('edit_user') }}">Muuta käyttäjän tietoja</a>
-<br />
-<a href="{{ url_for('moneysource') }}">Lisää rahalähteitä</a>
-<br />
-<a href="{{ url_for('add_transaction') }}">Lisää meno/tulo</a>
-
+<table>
+    <tr>
+        <td valign="top">
+            <h2>Toimintoja</h2>
+            <a href="{{ url_for('edit_user') }}">Muuta käyttäjän tietoja</a>
+            <br />
+            <a href="{{ url_for('moneysource') }}">Lisää rahalähteitä</a>
+            <br />
+            <a href="{{ url_for('add_transaction') }}">Lisää meno/tulo</a>
+        </td>
+        <td>
+            <h2>Menot ja tulot</h2>
+            <table>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ transaction.tr_date }}</td>
+                    <td>{{ transaction.tr_amount }}</td>
+                    <td>{{ transaction.tr_participant }}</td>
+                    <td>{{ transaction.tr_info }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('modify_transaction', tr_id=transaction.tr_id_pk) }}">
+                            <input type="submit" value="Muokkaa" />
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" OnClick="return confirm('Oletko varma että haluat poistaa rahalähteen?')" action="{{ url_for('remove_transaction', tr_id=transaction.tr_id_pk) }}">
+                            <input type="submit" value="Poista" />
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+</table>
 {% endblock %}

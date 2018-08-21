@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block body %}
-<form method="POST" action="{{ url_for('add_transaction') }}">
-      <h1>Lisää meno tai tulo</h1>
+<form method="POST" action="{{ url_for('modify_transaction',tr_id=tr_id) }}">
+      <h1>Muokkaa menoa tai tuloa</h1>
       <table width="500" style="max-width:100%;">
             <tr>
                   <td colspan="2">
@@ -61,7 +61,7 @@
             </tr>
             <tr>
                   <td colspan="2" align="right">
-                        <input type="submit" value="Lisää merkintä" />
+                        <input type="submit" value="Muokkaa merkintää" />
                   </td>
             </tr>
       </table>

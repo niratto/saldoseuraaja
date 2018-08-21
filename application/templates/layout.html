@@ -13,25 +13,30 @@
     th,
     td {
       padding: 4px;
-      text-align: left;
       border-bottom: 1px solid #ddd;
     }
   </style>
-</head >
+</head>
 
-      <body>
-        {% if current_user.is_authenticated %}
+<body>
+  {% if current_user.is_authenticated %}
+  <table width=60% border="0">
+    <tr>
+      <td align="left" width="50%">Käyttäjä:
+        <b>{{ current_user.name }}</b>
+      </td>
+      <td align="right">
+        <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
+      </td>
+    </tr>
+  </table>
+
+
+  {% endif %} {% block body %}
   <p>
-          Kirjautunut nimellä {{ current_user.name }}.
-    <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
-        </p>
-
-
-        {% endif %} {% block body %}
-  <p>
-          Content.
+    Content.
   </p>
-        {% endblock %}
-      </body>
+  {% endblock %}
+</body>
 
-</html >
+</html>
