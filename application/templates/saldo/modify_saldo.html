@@ -1,5 +1,5 @@
 {% extends "layout.html" %} {% block body %}
-<form method="POST" action="{{ url_for('modify_transaction',tr_id=tr_id) }}">
+<form method="POST" action="{{ url_for('modify_saldo',sa_id=sa_id) }}">
       <h1>Muokkaa menoa tai tuloa</h1>
       <table width="500" style="max-width:100%;">
             <tr>
@@ -25,27 +25,19 @@
                   </td>
             </tr>
             <tr>
-                  <td>
-                        {{ form.is_expense.label }}
-                  </td>
+                  <td>Rahalähde</td>
                   <td align="right">
-                        {{ form.is_expense }}
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        {{ form.participant.label }}
-                  </td>
-                  <td align="right">
-                        {{ form.participant }}
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        {{ form.info.label }}
-                  </td>
-                  <td align="right">
-                        {{ form.info }}
+                        <select name="msource_dropdown" width="300px">
+                              {% for source in sources %} {% if ms_id == source.ms_id_pk %}
+                              <option value="{{ source.ms_id_pk }}" SELECTED>
+                                    {{ source.ms_name }}
+                              </option>
+                              {% else %}
+                              <option value="{{ source.ms_id_pk }}">
+                                    {{ source.ms_name }}
+                              </option>
+                              {% endif %} {% endfor %}
+                        </select>
                   </td>
             </tr>
             <tr>

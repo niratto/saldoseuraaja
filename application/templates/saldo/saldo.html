@@ -31,10 +31,14 @@
         <td align="center">{{ source.sa_amount }}</td>
         <td align="center">{{ source.ms_name }}</td>
         <td align="center">
-            muokkaa
+            <form method="POST" action="{{ url_for('modify_saldo', sa_id=source.sa_id_pk) }}">
+                <input type="submit" value="Muokkaa" />
+            </form>
         </td>
         <td align="center">
-            poista
+            <form method="POST" OnClick="return confirm('Oletko varma että haluat poistaa saldon?')" action="{{ url_for('remove_saldo', sa_id=source.sa_id_pk) }}">
+                <input type="submit" value="Poista" />
+            </form>
         </td>
     </tr>
     {% endfor %}

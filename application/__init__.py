@@ -48,6 +48,9 @@ from application.transaction import views
 from application.saldo import models
 from application.saldo import views
 
+# budjetin lisääminen
+from application.budget import models
+
 # kirjautuminen
 from application.auth.models import User
 from os import urandom
