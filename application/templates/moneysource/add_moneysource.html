@@ -1,6 +1,8 @@
 {% extends "layout.html" %} {% block body %}
 <form method="POST" action="{{ url_for('add_moneysource') }}">
       <h1>Lisää rahalähde</h1>
+      <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+      <hr />
       <table width="500" style="max-width:100%;">
             <tr>
                   <td colspan="2">

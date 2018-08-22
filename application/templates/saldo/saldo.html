@@ -1,0 +1,43 @@
+{% extends "layout.html" %} {% block body %}
+
+<h1>Käyttäjän saldot</h1>
+<a href="{{ url_for('add_saldo') }}">Lisää saldo</a>
+<br />
+<a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+<hr />
+<table border="1">
+    <tr>
+        <th>PVM</th>
+        <th>SALDO</th>
+        <th>RAHALÄHDE</th>
+        <th colspan="2" align="center">
+            Toimintoja
+            <br /> {% with messages = get_flashed_messages() %} {% if messages %}
+            <font color="green">
+                <ul class=flashes>
+                    {% for message in messages %}
+                    <li>
+                        <i>{{ message }}</i>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </font>
+            {% endif %} {% endwith %}
+        </th>
+    </tr>
+    {% for source in sources %}
+    <tr>
+        <td align="center">{{ source.sa_date }}</td>
+        <td align="center">{{ source.sa_amount }}</td>
+        <td align="center">{{ source.ms_name }}</td>
+        <td align="center">
+            muokkaa
+        </td>
+        <td align="center">
+            poista
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

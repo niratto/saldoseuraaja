@@ -1,10 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 <form method="POST" action="{{ url_for('modify_transaction',tr_id=tr_id) }}">
       <h1>Muokkaa menoa tai tuloa</h1>
-      <a href="{{ url_for('add_moneysource') }}">Lisää rahalähde</a>
-      <br />
-      <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
-      <hr />
       <table width="500" style="max-width:100%;">
             <tr>
                   <td colspan="2">
@@ -18,22 +14,6 @@
                   <td align="right">
                         {{ form.date }}
                         <br />
-                  </td>
-            </tr>
-            <tr>
-                  <td>Rahalähde</td>
-                  <td align="right">
-                        <select name="msource_dropdown" width="300px">
-                              {% for source in sources %} {% if ms_id == source.ms_id_pk %}
-                              <option value="{{ source.ms_id_pk }}" SELECTED>
-                                    {{ source.ms_name }}
-                              </option>
-                              {% else %}
-                              <option value="{{ source.ms_id_pk }}">
-                                    {{ source.ms_name }}
-                              </option>
-                              {% endif %} {% endfor %}
-                        </select>
                   </td>
             </tr>
             <tr>

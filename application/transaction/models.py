@@ -12,6 +12,8 @@ class Transaction(db.Model):
     tr_participant = db.Column(db.String(255))
     tr_info = db.Column(db.String(255))
     
+    ms_id_fk = db.Column(db.Integer, db.ForeignKey('money_source.ms_id_pk'),
+                           nullable=False)
     acc_id_fk = db.Column(db.Integer, db.ForeignKey('account.id'),
                            nullable=False)
 

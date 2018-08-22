@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from flask import Flask, flash, redirect, render_template, request, url_for
 from application.transaction.forms import TransactionForm
 from application.transaction.models import Transaction
+from application.moneysource.models import Moneysource
 
 @app.route("/transaction/add/", methods = ["GET", "POST"])
 @login_required
@@ -18,14 +19,17 @@ def add_transaction():
 
         t = Transaction(form.date.data , fixed_amount, form.participant.data, form.info.data)
         t.acc_id_fk = current_user.id
+        t.ms_id_fk = request.form.get('msource_dropdown')
         db.session().add(t)
         db.session.commit()
 
         return redirect(url_for('booking_index'))
     elif request.method == 'POST' and not form.validate():
-        return render_template('transaction/add_transaction.html', form = form)
+        sources = Moneysource.query.filter_by(acc_id_fk=current_user.id)
+        return render_template('transaction/add_transaction.html', form = form, sources = sources)
     else:
-        return render_template('transaction/add_transaction.html', form = form)
+        sources = Moneysource.query.filter_by(acc_id_fk=current_user.id)
+        return render_template('transaction/add_transaction.html', form = form, sources = sources)
 
 @app.route("/transaction/remove/<int:tr_id>/", methods=["POST"])
 @login_required
@@ -61,7 +65,8 @@ def modify_transaction(tr_id):
             t.tr_participant = form.participant.data
             t.tr_info = form.info.data
             t.acc_id_fk = current_user.id
-            
+            t.ms_id_fk = request.form.get('msource_dropdown')
+
             db.session.commit()
             # save edits
             #save_changes(album, form)
@@ -70,6 +75,7 @@ def modify_transaction(tr_id):
             form.date.data = t.tr_date
             form.amount.data = t.tr_amount
             form.participant.data = t.tr_participant
+            current_msource = t.ms_id_fk
 
             if t.tr_amount > 0:
                 form.is_expense.data = True
@@ -77,6 +83,8 @@ def modify_transaction(tr_id):
                 form.is_expense.data = False
 
             form.info.data = t.tr_info
-            return render_template('transaction/modify_transaction.html', form=form, tr_id=tr_id)
+
+            sources = Moneysource.query.filter_by(acc_id_fk=current_user.id)
+            return render_template('transaction/modify_transaction.html', form=form, tr_id=tr_id, ms_id=current_msource, sources=sources)
     else:
         return 'Error loading #{id}'.format(id=id)

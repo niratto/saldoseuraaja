@@ -44,6 +44,10 @@ from application.moneysource import views
 from application.transaction import models
 from application.transaction import views
 
+# saldon lisääminen
+from application.saldo import models
+from application.saldo import views
+
 # kirjautuminen
 from application.auth.models import User
 from os import urandom

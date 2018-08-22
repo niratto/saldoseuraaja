@@ -1,9 +1,7 @@
 {% extends "layout.html" %} {% block body %}
-<form method="POST" action="{{ url_for('add_transaction') }}">
-      <h1>Lisää meno tai tulo</h1>
-      <a href="{{ url_for('add_moneysource') }}">Lisää rahalähde</a>
-      <br />
-      <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+<form method="POST" action="{{ url_for('add_saldo') }}">
+      <h1>Lisää saldo</h1>
+      <a href="{{ url_for('saldo') }}">Palaa saldo-yhteenvetoon</a>
       <hr />
       <table width="500" style="max-width:100%;">
             <tr>
@@ -21,6 +19,14 @@
                   </td>
             </tr>
             <tr>
+                  <td>
+                        {{ form.amount.label }}
+                  </td>
+                  <td align="right">
+                        {{ form.amount }}
+                  </td>
+            </tr>
+            <tr>
                   <td>Rahalähde</td>
                   <td align="right">
                         <select name="msource_dropdown" width="300px">
@@ -30,38 +36,6 @@
                               </option>
                               {% endfor %}
                         </select>
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        {{ form.amount.label }}
-                  </td>
-                  <td align="right">
-                        {{ form.amount }}
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        {{ form.is_expense.label }}
-                  </td>
-                  <td align="right">
-                        {{ form.is_expense }}
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        {{ form.participant.label }}
-                  </td>
-                  <td align="right">
-                        {{ form.participant }}
-                  </td>
-            </tr>
-            <tr>
-                  <td>
-                        {{ form.info.label }}
-                  </td>
-                  <td align="right">
-                        {{ form.info }}
                   </td>
             </tr>
             <tr>
