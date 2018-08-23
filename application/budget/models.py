@@ -9,8 +9,6 @@ class Budget(db.Model):
     bu_start_date = db.Column(db.Date, nullable=False)
     bu_end_date = db.Column(db.Date, nullable=False)
     
-    tr_id_fk = db.Column(db.Integer, db.ForeignKey('transactions.tr_id_pk'),
-                           nullable=False)
     sa_id_fk = db.Column(db.Integer, db.ForeignKey('saldo.sa_id_pk'),
                            nullable=False)
     ms_id_fk = db.Column(db.Integer, db.ForeignKey('money_source.ms_id_pk'),

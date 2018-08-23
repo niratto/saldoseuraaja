@@ -18,7 +18,12 @@ def auth_login():
     user = User.query.filter_by(username=form.username.data).first()
     active_user = User.query.filter_by(username=form.username.data,active=True).first()
     # katsotaan, täsmääkö käyttäjän suolatu salasana vs. selkokielisenä annettu salasana
-    pwd_ok = user.check_password(form.password.data)
+    
+    try:
+        pwd_ok = user.check_password(form.password.data)
+    except AttributeError:
+        return render_template("auth/loginform.html", form = form,
+                               error = "Antamasi tunnus tai salasana ei kelpaa!")
     
     # jos käyttäjää ei löydy tai salasana ei täsmää, niin ilmoitetaan herja käyttäjälle
     if not user or not pwd_ok:

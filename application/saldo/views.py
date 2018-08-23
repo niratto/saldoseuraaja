@@ -4,12 +4,20 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from application.saldo.forms import SaldoForm
 from application.saldo.models import Saldo
 from application.moneysource.models import Moneysource
+from sqlalchemy.sql import text
 
 @app.route("/saldo", methods=["GET","POST"])
 @login_required
 def saldo():
-    q = db.session.query(Saldo.sa_id_pk,Saldo.sa_date,Saldo.sa_amount,Moneysource.ms_name).join(Moneysource).filter(Saldo.acc_id_fk==current_user.id).filter(Saldo.ms_id_fk==Moneysource.ms_id_pk).order_by(Saldo.ms_id_fk,Saldo.sa_date.desc())
-    return render_template("saldo/saldo.html", sources = q)
+    sql = "select max(sa_date) as sa_date,sa_amount,ms_name "
+    sql += "from saldo "
+    sql += "inner join money_source on saldo.ms_id_fk = money_source.ms_id_pk "
+    sql += "group by ms_name order by sa_amount desc"
+
+    print("******** SQL: " + sql + " **********")
+    saldo_latest = db.engine.execute(text(sql))
+    saldo_all = db.session.query(Saldo.sa_id_pk,Saldo.sa_date,Saldo.sa_amount,Moneysource.ms_name).join(Moneysource).filter(Saldo.acc_id_fk==current_user.id).filter(Saldo.ms_id_fk==Moneysource.ms_id_pk).order_by(Saldo.sa_date.desc())
+    return render_template("saldo/saldo.html", saldos_latest = saldo_latest, saldos_all = saldo_all)
 
 @app.route("/saldo/add/", methods = ["GET", "POST"])
 @login_required

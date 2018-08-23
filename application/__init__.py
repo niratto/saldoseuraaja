@@ -49,6 +49,7 @@ from application.saldo import models
 from application.saldo import views
 
 # budjetin lisääminen
+from application.budget import views
 from application.budget import models
 
 # kirjautuminen
