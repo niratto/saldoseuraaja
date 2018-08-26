@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %}
-<form method="POST" action="{{ url_for('add_saldo') }}">
-      <h1>Lisää saldo</h1>
-      <a href="{{ url_for('saldo') }}">Palaa saldo-yhteenvetoon</a>
+<form method="POST" action="{{ url_for('add_budget') }}">
+      <h1>Lisää budjetti</h1>
+      <a href="{{ url_for('budget') }}">Palaa budjettien pääsivulle</a>
       <hr />
       <table width="500" style="max-width:100%;">
             <tr>
@@ -11,19 +11,19 @@
             </tr>
             <tr>
                   <td>
-                        {{ form.date.label }}
+                        {{ form.bname.label }}
                   </td>
                   <td align="right">
-                        {{ form.date }}
+                        {{ form.bname }}
                         <br />
                   </td>
             </tr>
             <tr>
                   <td>
-                        {{ form.amount.label }}
+                        {{ form.bamount.label }}
                   </td>
                   <td align="right">
-                        {{ form.amount }}
+                        {{ form.bamount }}
                   </td>
             </tr>
             <tr>
@@ -36,6 +36,23 @@
                               </option>
                               {% endfor %}
                         </select>
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        {{ form.bstart_date.label }}
+                  </td>
+                  <td align="right">
+                        {{ form.bstart_date }}
+                        <br />
+                  </td>
+            </tr>
+            <tr>
+                  <td>
+                        {{ form.bend_date.label }}
+                  </td>
+                  <td align="right">
+                        {{ form.bend_date }}
                   </td>
             </tr>
             <tr>

@@ -52,6 +52,9 @@ from application.saldo import views
 from application.budget import views
 from application.budget import models
 
+# reporttien lisääminen
+from application.reporting import views
+
 # kirjautuminen
 from application.auth.models import User
 from os import urandom

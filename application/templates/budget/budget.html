@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %}
 
 <h1>Käyttäjän budjetit</h1>
-<a href="">Lisää uusi budjetti</a>
+<a href="{{ url_for('add_budget') }}">Lisää uusi budjetti</a>
 <br />
 <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
 <hr />
@@ -12,6 +12,8 @@
         <th>RAHALÄHDE</th>
         <th>BUDJETIN ALOITUSPÄIVÄ</th>
         <th>BUDJETIN LOPETUSPÄIVÄ</th>
+        <th>PÄIVÄT</th>
+        <th>PÄIVÄKULUTUS<br />(keskiarvo)</th>
         <th colspan="2" align="center">
             Toimintoja
             <br /> {% with messages = get_flashed_messages() %} {% if messages %}
@@ -34,6 +36,8 @@
         <td align="center">{{ budget.ms_name }}</td>
         <td align="center">{{ budget.bu_start_date }}</td>
         <td align="center">{{ budget.bu_end_date }}</td>
+        <td align="center">{{ budget.bu_days_count }}</td>
+        <td align="center">{{ budget.bu_avg_daily_consumption }}€</td>
         <td align="center">
             <form method="POST" action="{{ url_for('modify_budget', bu_id=budget.bu_id_pk) }}">
                 <input type="submit" value="Muokkaa" />
