@@ -3,6 +3,7 @@
 Saldoseuraaja
 -------------------
 heroku: https://dashboard.heroku.com/apps/tsoha-saldoseuraaja
+(admin-käyttäjän salasana on admin)
 
 Lokaali asennusohje:
 -----------------------
