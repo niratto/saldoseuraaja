@@ -1,30 +1,9 @@
 # Saldoseuraaja
 
 Saldoseuraaja
--------------------
+
 heroku: https://dashboard.heroku.com/apps/tsoha-saldoseuraaja
 
-Lokaali asennusohje:
------------------------
-Hae saldoseuraaja githubista:
-https://github.com/niratto/saldoseuraaja
-
-pystytä virtuaaliympäristö esim. python3 -m venv myvenv
-pip install flask
-pip install flask_sqlalchemy
-pip install flask_login
-pip install flask_wtf
-
-Mene sovelluksen kansion juureen ja sieltä löydät run.py -tiedoston
-
-aja tuo tiedosto python run.py
-
-suuntaa http://localhost:5000/auth/login
-
-Ala käyttämään saldoseuraajaa
-
-Mikä on saldoseuraaja?
----------------------------
 Saldoseuraajan avulla käyttäjä voi tallentaa ja analysoida päivittäistä rahankäyttöään.
 
 Toimintoja, joita voi tehdä ennen kuin on kirjautunut:
