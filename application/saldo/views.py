@@ -9,11 +9,12 @@ from sqlalchemy.sql import text
 @app.route("/saldo", methods=["GET","POST"])
 @login_required
 def saldo():
-    sql = "select max(sa_date) as sa_date,sa_amount,ms_name "
-    sql += "from saldo "
-    sql += "inner join money_source on saldo.ms_id_fk = money_source.ms_id_pk "
-    sql += "where saldo.acc_id_fk = " + str(current_user.id) + " "
-    sql += "group by sa_amount, ms_name order by sa_amount desc"
+    sql = "select max(sa_date) as sa_date,sa_amount,ms_name from "
+    sql += "( select max(sa_id_pk) as sa_id_pk,ms_id_fk from saldo group by ms_id_fk ) r "
+    sql += "inner join saldo s on s.sa_id_pk = r.sa_id_pk "
+    sql += "inner join money_source ms on s.ms_id_fk = ms.ms_id_pk "
+    sql += "where s.acc_id_fk = " + str(current_user.id) + " "
+    sql += "group by sa_amount,ms_name order by sa_amount desc"
 
     print("******** SQL: " + sql + " **********")
     saldo_latest = db.engine.execute(text(sql))
