@@ -4,6 +4,7 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from application.transaction.forms import TransactionForm
 from application.transaction.models import Transaction
 from application.moneysource.models import Moneysource
+import datetime
 
 @app.route("/transaction/add/", methods = ["GET", "POST"])
 @login_required
@@ -53,7 +54,7 @@ def modify_transaction(tr_id):
         if request.method == 'POST' and form.validate():
             t.tr_id_pk = tr_id
             t.tr_date = form.date.data
-
+            t.tr_month = t.tr_date.month
             if form.is_expense.data == False and form.amount.data > 0:
                 fixed_amount = form.amount.data * -1
             elif form.is_expense.data == True and form.amount.data < 0:

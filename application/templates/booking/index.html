@@ -5,16 +5,18 @@
         <td valign="top">
             <h2>Toimintoja</h2>
             <a href="{{ url_for('edit_user') }}">Muuta käyttäjän tietoja</a>
-            <br />
+            <br /><br />
             <a href="{{ url_for('moneysource') }}">Lisää rahalähteitä</a>
             <br />
             <a href="{{ url_for('add_transaction') }}">Lisää meno/tulo</a>
             <br />
             <a href="{{ url_for('saldo') }}">Lisää saldo</a>
-            <br />
+            <br /><br />
             <a href="{{ url_for('budget') }}">Luo budjetti</a>
+            <br /><br />
+            <a href="{{ url_for('reporting', ms_id=0) }}">Raportti: menot ja tulot</a>
             <br />
-            <a href="{{ url_for('reporting') }}">Raportit</a>
+            <a href="{{ url_for('reporting_saldo') }}">Raportti: Saldoseuraaja</a>
         </td>
         <td>
             <h2>Menot ja tulot</h2>

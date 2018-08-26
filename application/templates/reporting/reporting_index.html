@@ -1,7 +1,36 @@
 {% extends "layout.html" %} {% block body %}
 
-<h1>Raportit</h1>
-<a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
-<hr />
-
+<table>
+  <tr>
+    <td valign="top">
+      <h2>Toimintoja</h2>
+      <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+      <br />
+      <h3>Rahalähteet</h3>
+      <a href="{{ url_for('reporting', ms_id=0 ) }}">Kaikki</a>
+      <br />
+      {% for source in sources %}
+      <a href="{{ url_for('reporting', ms_id=source.ms_id_pk ) }}">{{ source.ms_name }}</a>
+      </br />
+      {% endfor %}
+    </td>
+    <td>
+      <h2>RAPORTTI: Menojen ja tulojen saldot kuukausittain</h2>
+      <table border="0">
+        <tr>
+          <th>RAHALÄHDE</th>
+          <th>KUUKAUSI</th>
+          <th>MENOJEN/TULOJEN SALDO</th>
+        </tr>
+        {% for data_row in data %}
+        <tr>
+          <td align="center">{{ data_row.ms_name }}</td>
+          <td align="center">{{ data_row.tr_month }}</td>
+          <td align="center">{{ data_row.tr_amount }}€</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </td>
+  </tr>
+</table>
 {% endblock %}

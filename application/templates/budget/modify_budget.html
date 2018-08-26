@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block body %}
 <form method="POST" action="{{ url_for('modify_budget',bu_id=bu_id) }}">
       <h1>Muokkaa menoa tai tuloa</h1>
-      <a href="{{ url_for('budget') }}">Palaa saldo-yhteenvetoon</a>
+      <a href="{{ url_for('budget') }}">Palaa budjetti-yhteenvetoon</a>
       <hr />
       <table width="500" style="max-width:100%;">
             <tr>
@@ -30,11 +30,15 @@
                   <td>Rahalähde</td>
                   <td align="right">
                         <select name="msource_dropdown" width="300px">
-                              {% for source in sources %}
+                              {% for source in sources %} {% if ms_id == source.ms_id_pk %}
+                              <option value="{{ source.ms_id_pk }}" SELECTED>
+                                    {{ source.ms_name }}
+                              </option>
+                              {% else %}
                               <option value="{{ source.ms_id_pk }}">
                                     {{ source.ms_name }}
                               </option>
-                              {% endfor %}
+                              {% endif %} {% endfor %}
                         </select>
                   </td>
             </tr>

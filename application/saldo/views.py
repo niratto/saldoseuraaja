@@ -12,6 +12,7 @@ def saldo():
     sql = "select max(sa_date) as sa_date,sa_amount,ms_name "
     sql += "from saldo "
     sql += "inner join money_source on saldo.ms_id_fk = money_source.ms_id_pk "
+    sql += "where acc_id_fk = " + current_user.id
     sql += "group by ms_name order by sa_amount desc"
 
     print("******** SQL: " + sql + " **********")

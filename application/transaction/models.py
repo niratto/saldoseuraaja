@@ -1,4 +1,5 @@
 from application import db
+import datetime
 
 class Transaction(db.Model):
     __tablename__ = "transactions"
@@ -8,6 +9,7 @@ class Transaction(db.Model):
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                               onupdate=db.func.current_timestamp())
     tr_date = db.Column(db.Date, nullable=False)
+    tr_month = db.Column(db.Integer, nullable=False)
     tr_amount = db.Column(db.Numeric(10,2), nullable=False)
     tr_participant = db.Column(db.String(255))
     tr_info = db.Column(db.String(255))
@@ -19,7 +21,11 @@ class Transaction(db.Model):
 
     def __init__(self, date, amount, participant,info):
         self.tr_date = date
+        self.tr_month = self.pv2kk(date)
         self.tr_amount = amount
         self.tr_participant = participant
         self.tr_info = info
-        self.done = False
+        
+
+    def pv2kk(self, date):
+        return date.month
