@@ -10,11 +10,11 @@ Lokaali asennusohje:
 Hae saldoseuraaja githubista:
 https://github.com/niratto/saldoseuraaja
 
-pystytä virtuaaliympäristö esim. python3 -m venv myvenv
-pip install flask
-pip install flask_sqlalchemy
-pip install flask_login
-pip install flask_wtf
+pystytä virtuaaliympäristö esim. python3 -m venv myvenv<br />
+pip install flask<br />
+pip install flask_sqlalchemy<br />
+pip install flask_login<br />
+pip install flask_wtf<br />
 
 Mene sovelluksen kansion juureen ja sieltä löydät run.py -tiedoston
 
