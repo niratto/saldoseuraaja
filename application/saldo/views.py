@@ -13,7 +13,7 @@ def saldo():
     sql += "from saldo "
     sql += "inner join money_source on saldo.ms_id_fk = money_source.ms_id_pk "
     sql += "where saldo.acc_id_fk = " + str(current_user.id) + " "
-    sql += "group by ms_name order by sa_amount desc"
+    sql += "group by sa_amount, ms_name order by sa_amount desc"
 
     print("******** SQL: " + sql + " **********")
     saldo_latest = db.engine.execute(text(sql))
