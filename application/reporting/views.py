@@ -17,7 +17,7 @@ def reporting(ms_id):
         sql = "select ms_name,tr_month,sum(tr_amount) as tr_amount from transactions "
         sql += "inner join money_source on transactions.ms_id_fk=money_source.ms_id_pk "
         sql += "where ms_id_pk=" + str(ms_id) + " and transactions.acc_id_fk=" + str(current_user.id) + " "
-        sql += "group by tr_month"
+        sql += "group by ms_name, tr_month"
 
     print("******** SQL: " + sql + " **********")
     sum_transactions_per_month = db.engine.execute(text(sql))
