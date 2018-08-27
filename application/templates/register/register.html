@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 <form method="POST" action="{{ url_for('register') }}">
-  <h1>Rekisteröidy Saldoseuraajaan</h1>
+  <h1 class="text-info">Rekisteröidy Saldoseuraajaan</h1>
   <table width="500" style="max-width:100%;">
     <tr>
       <td colspan="2">
@@ -9,7 +9,9 @@
     </tr>
     <tr>
       <td>
+        <span class="text-info">
         {{ form.name.label }}
+      </span>
       </td>
       <td align="right">
         {{ form.name }}
@@ -17,7 +19,9 @@
     </tr>
     <tr>
       <td>
+          <span class="text-info">
         {{ form.username.label }}
+        </span>
       </td>
       <td align="right">
         {{ form.username }}
@@ -25,7 +29,9 @@
     </tr>
     <tr>
       <td>
+          <span class="text-info">
         {{ form.password.label }}
+        </span>
       </td>
       <td align="right">
         {{ form.password }}
@@ -33,7 +39,9 @@
     </tr>
     <tr>
       <td>
+          <span class="text-info">
         {{ form.password2.label }}
+        </span>
       </td>
       <td align="right">
         {{ form.password2 }}

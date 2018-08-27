@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 
-<table>
+<table width="90%" border="1">
     <tr>
         <td valign="top">
             <h2>Toimintoja</h2>
@@ -20,7 +20,7 @@
         </td>
         <td>
             <h2>Menot ja tulot</h2>
-            <table>
+            <table width="100%">
                 <tr>
                     <th>PVM</th>
                     <th>MÄÄRÄ (€)</th>
@@ -32,7 +32,7 @@
                 {% for transaction in transactions %}
                 <tr>
                     <td align="center">{{ transaction.tr_date }}</td>
-                    <td align="center">{{ transaction.tr_amount }}</td>
+                    <td align="center">{{ transaction.tr_amount }}€</td>
                     <td align="center">{{ transaction.ms_name }}</td>
                     <td align="center">{{ transaction.tr_participant }}</td>
                     <td align="center">{{ transaction.tr_info }}</td>

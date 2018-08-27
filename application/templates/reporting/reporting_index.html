@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 
-<table>
+<table width="90%">
   <tr>
     <td valign="top">
       <h2>Toimintoja</h2>
@@ -16,7 +16,7 @@
     </td>
     <td>
       <h2>RAPORTTI: Menojen ja tulojen saldot kuukausittain</h2>
-      <table border="0">
+      <table border="0" width="100%">
         <tr>
           <th>RAHALÄHDE</th>
           <th>KUUKAUSI</th>
@@ -24,9 +24,9 @@
         </tr>
         {% for data_row in data %}
         <tr>
-          <td align="center">{{ data_row.ms_name }}</td>
-          <td align="center">{{ data_row.tr_month }}</td>
-          <td align="center">{{ data_row.tr_amount }}€</td>
+          <td>{{ data_row.ms_name }}</td>
+          <td>{{ data_row.tr_month }}</td>
+          <td>{{ data_row.tr_amount }}€</td>
         </tr>
         {% endfor %}
       </table>

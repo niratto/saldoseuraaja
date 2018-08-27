@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <title>Saldoseuraaja</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" media="screen" href = "{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+  <!--
   <style>
     table {
       border-collapse: collapse;
@@ -16,27 +19,38 @@
       border-bottom: 1px solid #ddd;
     }
   </style>
+-->
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+
   {% if current_user.is_authenticated %}
-  <table width=60% border="0">
+  <table width=90% border="0">
     <tr>
-      <td align="left" width="50%">Käyttäjä:
-        <b>{{ current_user.name }}</b>
+      <td align="left" width="50%"><span class="text-info">Käyttäjä:</span>
+        <b class="text-success">{{ current_user.name }}</b>
       </td>
       <td align="right">
-        <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
+          <a class="nav-link" href="{{ url_for('auth_logout') }}">Kirjaudu ulos
+              <span class="sr-only">(current)</span>
+            </a>
       </td>
     </tr>
   </table>
-
+</nav>
 
   {% endif %} {% block body %}
   <p>
     Content.
   </p>
   {% endblock %}
+
+  <!-- Bootstrap core JavaScript -->
+  
+  <script src="{{ url_for('static', filename='bootstrap/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
 </body>
 
 </html>

@@ -6,7 +6,7 @@
 <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
 <hr />
 <h2>Viimeisin saldomerkintä per rahalähde</h2>
-<table border="1">
+<table border="0" width="90%">
     <tr>
         <th>PVM</th>
         <th>SALDO</th>
@@ -14,14 +14,14 @@
     </tr>
     {% for saldo in saldos_latest %}
     <tr>
-        <td align="center">{{ saldo.sa_date }}</td>
-        <td align="center">{{ saldo.sa_amount }}</td>
-        <td align="center">{{ saldo.ms_name }}</td>
+        <td>{{ saldo.sa_date }}</td>
+        <td>{{ saldo.sa_amount }}</td>
+        <td>{{ saldo.ms_name }}</td>
     </tr>
     {% endfor %}
 </table>
 <h2>Kaikki saldomerkinnät</h2>
-<table border="1">
+<table border="0" width="90%">
     <tr>
         <th>PVM</th>
         <th>SALDO</th>
@@ -43,15 +43,15 @@
     </tr>
     {% for saldo in saldos_all %}
     <tr>
-        <td align="center">{{ saldo.sa_date }}</td>
-        <td align="center">{{ saldo.sa_amount }}</td>
-        <td align="center">{{ saldo.ms_name }}</td>
-        <td align="center">
+        <td>{{ saldo.sa_date }}</td>
+        <td>{{ saldo.sa_amount }}</td>
+        <td>{{ saldo.ms_name }}</td>
+        <td>
             <form method="POST" action="{{ url_for('modify_saldo', sa_id=saldo.sa_id_pk) }}">
                 <input type="submit" value="Muokkaa" />
             </form>
         </td>
-        <td align="center">
+        <td>
             <form method="POST" OnClick="return confirm('Oletko varma että haluat poistaa saldon?')" action="{{ url_for('remove_saldo', sa_id=saldo.sa_id_pk) }}">
                 <input type="submit" value="Poista" />
             </form>

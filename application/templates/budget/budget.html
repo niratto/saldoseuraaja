@@ -1,55 +1,64 @@
 {% extends "layout.html" %} {% block body %}
 
-<h1>Käyttäjän budjetit</h1>
-<a href="{{ url_for('add_budget') }}">Lisää uusi budjetti</a>
-<br />
-<a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
-<hr />
-<table border="1">
+<table width="90%">
     <tr>
-        <th>BUDJETIN NIMI/KUVAUS</th>
-        <th>BUDJETIN SUURUUS (€)</th>
-        <th>RAHALÄHDE</th>
-        <th>BUDJETIN ALOITUSPÄIVÄ</th>
-        <th>BUDJETIN LOPETUSPÄIVÄ</th>
-        <th>PÄIVÄT</th>
-        <th>PÄIVÄKULUTUS<br />(keskiarvo)</th>
-        <th colspan="2" align="center">
-            Toimintoja
-            <br /> {% with messages = get_flashed_messages() %} {% if messages %}
-            <font color="green">
-                <ul class=flashes>
-                    {% for message in messages %}
-                    <li>
-                        <i>{{ message }}</i>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </font>
-            {% endif %} {% endwith %}
-        </th>
-    </tr>
-    {% for budget in budgets %}
-    <tr>
-        <td align="center">{{ budget.bu_name }}</td>
-        <td align="center">{{ budget.bu_amount }}</td>
-        <td align="center">{{ budget.ms_name }}</td>
-        <td align="center">{{ budget.bu_start_date }}</td>
-        <td align="center">{{ budget.bu_end_date }}</td>
-        <td align="center">{{ budget.bu_days_count }}</td>
-        <td align="center">{{ budget.bu_avg_daily_consumption }}€</td>
-        <td align="center">
-            <form method="POST" action="{{ url_for('modify_budget', bu_id=budget.bu_id_pk) }}">
-                <input type="submit" value="Muokkaa" />
-            </form>
+        <td valign="top">
+            <h2>Toimintoja</h2>
+            <a href="{{ url_for('add_budget') }}">Lisää uusi budjetti</a>
+            <br />
+            <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+            <hr />
         </td>
-        <td align="center">
-            <form method="POST" OnClick="return confirm('Oletko varma että haluat poistaa budjetin?')" action="{{ url_for('remove_budget', bu_id=budget.bu_id_pk) }}">
-                <input type="submit" value="Poista" />
-            </form>
+        <td valign="top">
+            <h2>Käyttäjän budjetit</h2>
+            <table border="0" width="100%">
+                <tr>
+                    <th>BUDJETIN NIMI/KUVAUS</th>
+                    <th>BUDJETIN SUURUUS (€)</th>
+                    <th>RAHALÄHDE</th>
+                    <th>BUDJETIN ALOITUSPÄIVÄ</th>
+                    <th>BUDJETIN LOPETUSPÄIVÄ</th>
+                    <th>PÄIVÄT</th>
+                    <th>PÄIVÄKULUTUS
+                        <br />(keskiarvo)</th>
+                    <th colspan="2" align="center">
+                        Toimintoja
+                        <br /> {% with messages = get_flashed_messages() %} {% if messages %}
+                        <font color="green">
+                            <ul class=flashes>
+                                {% for message in messages %}
+                                <li>
+                                    <i>{{ message }}</i>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </font>
+                        {% endif %} {% endwith %}
+                    </th>
+                </tr>
+                {% for budget in budgets %}
+                <tr>
+                    <td align="left">{{ budget.bu_name }}</td>
+                    <td align="left">{{ budget.bu_amount }}</td>
+                    <td align="left">{{ budget.ms_name }}</td>
+                    <td align="left">{{ budget.bu_start_date }}</td>
+                    <td align="left">{{ budget.bu_end_date }}</td>
+                    <td align="left">{{ budget.bu_days_count }}</td>
+                    <td align="left">{{ budget.bu_avg_daily_consumption }}€</td>
+                    <td align="left">
+                        <form method="POST" action="{{ url_for('modify_budget', bu_id=budget.bu_id_pk) }}">
+                            <input type="submit" value="Muokkaa" />
+                        </form>
+                    </td>
+                    <td align="center">
+                        <form method="POST" OnClick="return confirm('Oletko varma että haluat poistaa budjetin?')" action="{{ url_for('remove_budget', bu_id=budget.bu_id_pk) }}">
+                            <input type="submit" value="Poista" />
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
         </td>
     </tr>
-    {% endfor %}
 </table>
-
 {% endblock %}
