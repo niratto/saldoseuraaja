@@ -39,3 +39,10 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    # vain hyvikset sallittu!! Kaikki tyypit, joiden tunnuksesta löytyy evil, ei pääse sisään!
+    def roles(self):
+        if 'evil' not in self.username:
+            return ["GOOD"]
+        else:
+            return ["BAD"]
