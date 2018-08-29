@@ -128,73 +128,76 @@ viittaus money_source-tauluun money_source 1...n Saldo
 <hr />
 * toteutuksessa salasana on kryptattuna tietokannassa
 
+<h3>Entity-Relationship diagrammi</h3>
+DBVisualizer-ohjelmalla tehtyä ERD-diagrammia voit ihailla <a href="https://github.com/niratto/saldoseuraaja/blob/master/ERD/erd.jpg">tämän linkin</a> kautta.
+
 <h3>Skeema</h3>
-CREATE TABLE account (
-	id INTEGER NOT NULL, 
-	date_created DATETIME, 
-	date_modified DATETIME, 
-	name VARCHAR(144) NOT NULL, 
-	username VARCHAR(144) NOT NULL, 
-	password VARCHAR(144) NOT NULL, 
-	active BOOLEAN, 
-	admin BOOLEAN, 
-	PRIMARY KEY (id), 
-	CHECK (active IN (0, 1)), 
-	CHECK (admin IN (0, 1))
+CREATE TABLE account (<br />
+	id INTEGER NOT NULL, <br />
+	date_created DATETIME, <br />
+	date_modified DATETIME, <br />
+	name VARCHAR(144) NOT NULL, <br />
+	username VARCHAR(144) NOT NULL, <br />
+	password VARCHAR(144) NOT NULL, <br />
+	active BOOLEAN, <br />
+	admin BOOLEAN, <br />
+	PRIMARY KEY (id), <br />
+	CHECK (active IN (0, 1)),<br /> 
+	CHECK (admin IN (0, 1))<br />
+);<br />
+<br />
+CREATE TABLE saldo (<br />
+	sa_id_pk INTEGER NOT NULL, <br />
+	sa_created DATETIME, <br />
+	sa_modified DATETIME, <br />
+	sa_date DATE NOT NULL, <br />
+	sa_amount NUMERIC(10, 2) NOT NULL, <br />
+	ms_id_fk INTEGER, <br />
+	acc_id_fk INTEGER NOT NULL, <br />
+	PRIMARY KEY (sa_id_pk), <br />
+	FOREIGN KEY(ms_id_fk) REFERENCES money_source (ms_id_pk), <br />
+	FOREIGN KEY(acc_id_fk) REFERENCES account (id)<br />
+);<br />
+<br />
+CREATE TABLE budget (<br />
+	bu_id_pk INTEGER NOT NULL, <br />
+	bu_name VARCHAR(255) NOT NULL, <br />
+	bu_amount NUMERIC(10, 2) NOT NULL, <br />
+	bu_start_date DATE NOT NULL, <br />
+	bu_end_date DATE NOT NULL, <br />
+	bu_days_count INTEGER NOT NULL, <br />
+	bu_avg_daily_consumption NUMERIC(10, 2) NOT NULL, <br />
+	ms_id_fk INTEGER NOT NULL, <br />
+	acc_id_fk INTEGER NOT NULL, <br />
+	PRIMARY KEY (bu_id_pk), <br />
+	FOREIGN KEY(ms_id_fk) REFERENCES money_source (ms_id_pk), <br />
+	FOREIGN KEY(acc_id_fk) REFERENCES account (id)<br />
 );
 <br />
-CREATE TABLE saldo (
-	sa_id_pk INTEGER NOT NULL, 
-	sa_created DATETIME, 
-	sa_modified DATETIME, 
-	sa_date DATE NOT NULL, 
-	sa_amount NUMERIC(10, 2) NOT NULL, 
-	ms_id_fk INTEGER, 
-	acc_id_fk INTEGER NOT NULL, 
-	PRIMARY KEY (sa_id_pk), 
-	FOREIGN KEY(ms_id_fk) REFERENCES money_source (ms_id_pk), 
-	FOREIGN KEY(acc_id_fk) REFERENCES account (id)
-);
+CREATE TABLE transactions (<br />
+	tr_id_pk INTEGER NOT NULL, <br />
+	date_created DATETIME, <br />
+	date_modified DATETIME, <br />
+	tr_date DATE NOT NULL, <br />
+	tr_month INTEGER NOT NULL, <br />
+	tr_amount NUMERIC(10, 2) NOT NULL, <br />
+	tr_participant VARCHAR(255), <br />
+	tr_info VARCHAR(255), <br />
+	ms_id_fk INTEGER NOT NULL, <br />
+	acc_id_fk INTEGER NOT NULL, <br />
+	PRIMARY KEY (tr_id_pk), <br />
+	FOREIGN KEY(ms_id_fk) REFERENCES money_source (ms_id_pk), <br />
+	FOREIGN KEY(acc_id_fk) REFERENCES account (id)<br />
+);<br />
 <br />
-CREATE TABLE budget (
-	bu_id_pk INTEGER NOT NULL, 
-	bu_name VARCHAR(255) NOT NULL, 
-	bu_amount NUMERIC(10, 2) NOT NULL, 
-	bu_start_date DATE NOT NULL, 
-	bu_end_date DATE NOT NULL, 
-	bu_days_count INTEGER NOT NULL, 
-	bu_avg_daily_consumption NUMERIC(10, 2) NOT NULL, 
-	ms_id_fk INTEGER NOT NULL, 
-	acc_id_fk INTEGER NOT NULL, 
-	PRIMARY KEY (bu_id_pk), 
-	FOREIGN KEY(ms_id_fk) REFERENCES money_source (ms_id_pk), 
-	FOREIGN KEY(acc_id_fk) REFERENCES account (id)
-);
-<br />
-CREATE TABLE transactions (
-	tr_id_pk INTEGER NOT NULL, 
-	date_created DATETIME, 
-	date_modified DATETIME, 
-	tr_date DATE NOT NULL, 
-	tr_month INTEGER NOT NULL, 
-	tr_amount NUMERIC(10, 2) NOT NULL, 
-	tr_participant VARCHAR(255), 
-	tr_info VARCHAR(255), 
-	ms_id_fk INTEGER NOT NULL, 
-	acc_id_fk INTEGER NOT NULL, 
-	PRIMARY KEY (tr_id_pk), 
-	FOREIGN KEY(ms_id_fk) REFERENCES money_source (ms_id_pk), 
-	FOREIGN KEY(acc_id_fk) REFERENCES account (id)
-);
-<br />
-CREATE TABLE money_source (
-	ms_id_pk INTEGER NOT NULL, 
-	ms_name VARCHAR(255) NOT NULL, 
-	ms_extrainfo VARCHAR(255), 
-	acc_id_fk INTEGER NOT NULL, 
-	PRIMARY KEY (ms_id_pk), 
-	FOREIGN KEY(acc_id_fk) REFERENCES account (id)
-);
+CREATE TABLE money_source (<br />
+	ms_id_pk INTEGER NOT NULL, <br />
+	ms_name VARCHAR(255) NOT NULL, <br />
+	ms_extrainfo VARCHAR(255), <br />
+	acc_id_fk INTEGER NOT NULL, <br />
+	PRIMARY KEY (ms_id_pk), <br />
+	FOREIGN KEY(acc_id_fk) REFERENCES account (id)<br />
+);<br />
 
 .......
 
