@@ -4,6 +4,7 @@ from flask import Flask, flash, redirect, render_template, request, url_for
 from application.budget.forms import BudgetForm
 from application.budget.models import Budget
 from application.moneysource.models import Moneysource
+from datetime import datetime
 
 @app.route("/budget", methods=["GET","POST"])
 @login_required
@@ -50,14 +51,19 @@ def modify_budget(bu_id):
     
     if b:
         if request.method == 'POST' and form.validate():
+            start_date = form.bstart_date.data
+            end_date = form.bend_date.data
+
             print("****** OK ***********")
             b.bu_name = form.bname.data
             b.bu_amount = form.bamount.data
             b.bu_start_date = form.bstart_date.data
             b.bu_end_date = form.bend_date.data
-
+            b.bu_days_count = (end_date - start_date).days
+            b.bu_avg_daily_consumption = b.bu_amount / b.bu_days_count
             b.acc_id_fk = current_user.id
             b.ms_id_fk = request.form.get('msource_dropdown')
+
             db.session.commit()
             return redirect(url_for('budget'))
         else:            

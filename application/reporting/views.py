@@ -58,10 +58,10 @@ def reporting_saldo_budget(bu_id):
         
         saldo_amount_calc = str(bu_amount - (bu_daily_avg * day))
         if todellinen:
-            str_data = str(day) + "," + saldo_date + "," + str(saldo_amount_real) + "€," + saldo_amount_calc + "€"
+            str_data = str(1) + "," + str(day) + "," + saldo_date + "," + str(saldo_amount_real) + "€," + saldo_amount_calc + "€"
         else:
-            str_data = str(day) + "," + saldo_date + "," + str(saldo_amount_real) + "€*," + saldo_amount_calc + "€"
-        
+            str_data = str(0) + "," + str(day) + "," + saldo_date + "," + str(saldo_amount_real) + "€," + saldo_amount_calc + "€"
+
         list.append(str_data)
         saldo_amount_real_tmp = saldo_amount_real
 

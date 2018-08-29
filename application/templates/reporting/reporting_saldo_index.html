@@ -1,37 +1,56 @@
 {% extends "layout.html" %} {% block body %}
 
 <table width="90%">
-    <tr>
-      <td valign="top">
-        <h2>Toimintoja</h2>
-        <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
-        <br /><br />
-        <h3>Budjetit</h3>
-        {% for budget in budgets %}
-        <a href="{{ url_for('reporting_saldo_budget', bu_id=budget.bu_id_pk ) }}">{{ budget.bu_name }}</a>
-        </br />
+  <tr>
+    <td valign="top">
+      <h2>Toimintoja</h2>
+      <a href="{{ url_for('booking_index') }}">Palaa etusivulle</a>
+      <br />
+      <br />
+      <h3>Budjetit</h3>
+      {% for budget in budgets %}
+      <a href="{{ url_for('reporting_saldo_budget', bu_id=budget.bu_id_pk ) }}">{{ budget.bu_name }}</a>
+      </br /> {% endfor %}
+    </td>
+    <td valign="top">
+      <h2>RAPORTTI: Saldoseuranta</h2>
+      <div style="width:80%;background:#ccddcc;border:1px dotted black;text-align:left">
+        <div class="panel-heading"><b><u>Merkinnät: toteutunut saldo</u></b></div>
+        <div class="panel-body">
+            <b>1500€</b> - todellinen päivän saldo
+            <br />
+            <i>1500€</i> - laskutoimituksella arvioitu päivän saldo
+        </div>
+      </div>
+      <br />
+      <table border="0" width="100%">
+        <tr>
+          <th>#</th>
+          <th>PVM</th>
+          <th>TOTEUTUNUT SALDO</th>
+          <th>LASKETTU SALDO</th>
+        </tr>
+        {% for data_row in budget_data %} {% set list = data_row.split(",") %}
+        <tr>
+          <td>{{ list[1] }}</td>
+          <td>{{ list[2] }}</td>
+
+          {% if list[0] == "1" %}
+          <td>
+            <b>{{ list[3] }}</b>
+          </td>
+          {% else %}
+          <td>
+            <i>{{ list[3] }}</i>
+          </td>
+          {% endif %}
+
+          <td>{{ list[4] }}</td>
+
+        </tr>
         {% endfor %}
-      </td>
-      <td valign="top">
-        <h2>RAPORTTI: Saldoseuranta</h2>
-        <table border="0" width="100%">
-          <tr>
-            <th>#</th>
-            <th>PVM</th>
-            <th>TOTEUTUNUT SALDO</th>
-            <th>LASKETTU SALDO</th>
-          </tr>
-          {% for data_row in budget_data %}
-          {% set list = data_row.split(",") %}
-          <tr>
-            <td>{{ list[0] }}</td>
-            <td>{{ list[1] }}</td>
-            <td>{{ list[2] }}</td>
-            <td>{{ list[3] }}</td>
-          </tr>
-          {% endfor %}
-        </table>
-      </td>
-    </tr>
-  </table>
+      </table>
+    </td>
+  </tr>
+</table>
 {% endblock %}

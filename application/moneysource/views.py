@@ -17,7 +17,7 @@ def remove_moneysource(source_id):
     db.session().delete(ms)
     db.session().commit()
 
-    flash("Rahalähde id:llä " + source_id + " on nyt poistettu")
+    # flash("Rahalähde id:llä " + source_id + " on nyt poistettu")
     return redirect(url_for("moneysource"))
 
 @app.route("/source/add/", methods = ["GET", "POST"])
@@ -52,7 +52,7 @@ def modify_moneysource(source_id):
             db.session.commit()
             # save edits
             #save_changes(album, form)
-            flash('JESS!' + str(source_id) + ' ' + str(current_user.id))
+            # flash('JESS!' + str(source_id) + ' ' + str(current_user.id))
             return redirect(url_for('moneysource'))
         else:
             form.name.data = ms.ms_name
