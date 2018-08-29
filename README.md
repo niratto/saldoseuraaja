@@ -2,7 +2,7 @@
 
 Saldoseuraaja
 -------------------
-heroku: https://dashboard.heroku.com/apps/tsoha-saldoseuraaja
+heroku: https://tsoha-saldoseuraaja.herokuapp.com/
 (admin-käyttäjän salasana on admin)
 
 Lokaali asennusohje:
@@ -132,6 +132,7 @@ viittaus money_source-tauluun money_source 1...n Saldo
 DBVisualizer-ohjelmalla tehtyä ERD-diagrammia voit ihailla <a href="https://github.com/niratto/saldoseuraaja/blob/master/ERD/erd.jpg">tämän linkin</a> kautta.
 
 <h3>Skeema</h3>
+
 CREATE TABLE account (  
 	id INTEGER NOT NULL,   
 	date_created DATETIME,   
