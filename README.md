@@ -329,3 +329,24 @@ Tämä siis toimii tällä logiikalla. Oletetaan, että käyttäjällä on vaikk
 Saldoseurannan raportoinnissa näkyy vasemmalla nyt elo-syys –linkki. Jos sen avaa, niin saldoseurannan raportti tulee näkyviin; budjetti ”elo-syys” vs. toteutuneet saldot.
 Raportissa näkyy budjetin ”elo-syys” kaikki päivämäärät (järjestetty nousevasti päivämäärän mukaan), toteutunut saldo –sarake, jossa näkyy aikavälille annetut saldomerkinnät lihavoituna ja niille päiville mitä saldoa ei ole annettu, niin nämä arvioidaan laskutoimituksen perusteella (eli trendin mukaan). Raportilla näkyy myös ”laskettu saldo” –sarake, jossa näkyy budjetille annettu rahamäärä, eli tässä tapauksessa 2500 euroa. Sitten joka riville tulee jokaiselle päivälle laskettu saldo sillä perusteella, että budjetin viimeisenä päivänä käyttäjällä on rahaa 0 euroa.
 Tästä käyttäjä voi päätellä, että miten hänen saldonsa muuttuminen korreloi lasketun saldon kanssa.
+
+----
+
+Tiedetyt issuet ja jatkokehitys-ideat:
+
+- käyttäjälle annetut ilmoitukset on tehty hyvin suurpiirteisesti. Halusin sovellukseen jotain tällaisia virheilmoituksia, mutten keksinyt miten saan kenttäspesifejä viestejä, joten tein tällaisen hyvin quick and dirty -ratkaisun
+- budjetissa ei kokeilla, että voiko päätöspäivä olla pienempi kuin aloituspäivä. Tämä pitää korjata tulevaisuudessa.
+- valuutat voisi antaa siten, että desimaalina toimii joko piste tai pilkku. Tällä hetkellä vain piste toimii.
+- poistoista ilmoitetaan javascriptillä tehdyllä popupilla mikä on aika ruma tapa. Tälle voisi tehdä jonkun modaalin tms. bootstrapilla, että varmistusilmoituksen (oletko varma jne.) olisivat vähän nätimpiä
+- add ja modify -sivut ovat identtisiä suurelta osin, mutta nämä on nyt toteutettu omiin html-tiedostoihin. Nämä voisi varmasti nivoa jotenkin yhteen ja tehdä toteutuksesta modulaarisempi.
+- sovelluksen tekstit ja viestit voisi olla jossain tietokanta-taulussa, joka mahdollistaisi tekstien muokkauksen (helpomman sellaisen) sekä myös mahd. toisenkielisen toteutuksen
+- koska sovelluksessa on admin-käyttäjä joka voi deaktivoida ja nollailla salasanoja, niin sovelluksessa voisi olla myös joku audit-loki/-taulu, josta näkisi, että milloin on tehty ja mitä. Nythän mistään ei jää mitään jälkeä.
+- sovelluksen ulkoasua voisi stilisoida, sillä nyt bootstrap on lähinnä vaan lyöty alkuperäisen toteutuksen päälle puoliväkisin
+- autorisointia voisi jalostaa admin- ja user-tason toimintaan. Tällä hetkellähän sovelluksen "evil"-autorisointi on lähinnä väkisintoteutettu muka-toiminnallisuus
+- sovellukseen voisi importoida dataa esim. csv-tiedostosta ja sovelluksesta voisi myös voida exportoida dataa esim. csv-tiedostoon
+- saldoseuranta-raportilla voisi näkyä toteutuneen saldon ero sen hetkiseen laskettuun saldoon, tyyliin "toteutunut saldo 1300eur ja laskettu 1100eur. Olet 200 euroa edellä tavoitettasi!"
+- menot/tulot kuukausittain voisi toteuttaa jollain välpyttimellä joka näyttäisi kaavion graafisessa muodossa (esim. pylväsdiagrammi)
+- annettujen saldojen yhteenvetokyselyssa saldo-sivulla on jotain häikkää. Sen saa joskus näyttämään jotain muuta kuin ko. rahalähteen viimeisimmän saldomerkinnän.
+- menojen/tulojen yhteenvetonäkymässä booking-sivulla päivämäärien mukaan sorttaus toimii vähän hassusti jos materiaalia on paljon. Kokeilin joskus populoida kantaan enemmän merkintöjä ja se sorttaa ne tavallaan oikein, mutta yksittäuiset päivämäärät olivat epäjärjestyksessä
+- Chromen WAVE accessability plugin ei anna sovelluksen sivuille puhtaita papereita ja saavutettavuus (ainakaan WCAG 2.0 standardien mukaan) ei toteutudu
+- ...
