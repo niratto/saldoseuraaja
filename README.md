@@ -204,6 +204,14 @@ CREATE TABLE money_source (
 
 Toiminnot ja rajoitukset sivuittain:
 
+Yleiset säännöt, jotka toistuvat sovelluksessa:
+- kaikki lisäys-, muokkaus- ja poistotoimenpiteet ovat toteutettu samalla logiikalla
+	- esim. toiminto ”saldo”
+	- saldo/add  lisäys
+	- saldo/modify/<saldon id>  muokkaus
+	- saldo/remove/<saldon id>  poisto
+- poistoissa käyttäjän pitää vahvistaa javascript-popup-ikkunan kautta esitettyyn ”oletko varma, että haluat poistaa …”-kysymykseen myöntävä vastaus (Chromessa ainakin OK tai Peruuta)
+
 1. Kirjautumissivu (auth/login)
 
 - Käyttäjätunnus ei saa olla tyhjä
@@ -216,11 +224,11 @@ Toiminnot ja rajoitukset sivuittain:
 - käyttäjä voi rekisteröityä
 
 2. Rekisteröityminen
-
 - nimi/alias ei saa olla tyhjä
 - käyttäjätunnus ei saa olla tyhjä
 - salasana ei saa olla tyhjä
 - vahvista salasanan tulee olla identtinen salasanan kanssa
+- Jos identtinen käyttäjätunnus löytyy jo tietokannasta, niin tästä ilmoitetaan rekisteröityvälle käyttäjälle ilmoituksella
 - HUOM! jos tietokannassa ei ole admin-tason käyttäjää, niin ensimmäinen rekisteröityminen on admin-tason rekisteröityminen (näitä voi tehdä vain kerran; ellei sitten tuhoa tietokantaa välissä)
 - jos tietokannassa on admin-tason käyttäjä, niin rekisteröitymiset ovat user-tason rekisteröitymisiä
 - admin ja user-tason käyttäjien ero tietokannassa Account-taulussa on se, että adminilla Admin-sarake on true ja käyttäjällä False
@@ -230,39 +238,94 @@ Toiminnot ja rajoitukset sivuittain:
 Admin-sivulla (kirjautuminen admin-käyttäjänä) voi
 - deaktivoida käyttäjän
 - nollata käyttäjän salasanan (siitä tulee käyttäjätunnus väärinpäin)
+- admin-sivulla näytetään kaikki käyttäjät, joiden admin-sarake account-taulussa on false
 
 4. booking-sivu
 
-Tämä on sivu, jonne tulee lopulta transaktioiden, saldojen yms. lisääminen. Tällä hetkellä 17.8.2018 sivulla on
-
+Tämä on sivu, jonne tulee lopulta transaktioiden, saldojen yms. lisääminen. Tällä hetkellä sivulla on
 - käyttäjän tietojen muokkaaminen
-- rahalähteen lisäys, muokkaus ja poisto
+- rahalähteiden raportointi, lisäys, muokkaus ja poisto
+- menojen/tulojen lisäys, muokkaus, poisto
+- saldon raportointi, lisäys, muokkaus, poisto
+- budjetin raportointi, lisäys, muokkaus, poisto
+- menojen ja tulojen kuukausittainen raportointi
+	- kaikki tai per rahalähde
+- saldoseurannan raportointi
+	- perustuu annettuihin saldomerkintöihin ja luotuun budjettiin
+	- tässä vertaillaan miten pankkitilin saldo korreloi arvioidun budjetin kanssa
+
+Sivun oletusnäkymä on vasemmassa paneelissa linkit ym. toimintoihin ja oikeassa paneelissa kaikki menot/tulot kaikista rahalähteistä, eli transactions-taulun yhteenvetokysely. Järjestetty laskevasti päivämäärän mukaan.
 
 5. user/edit -sivu
 
 Tällä sivulla käyttäjä voi muokata aliastaan sekä päivittää salasanansa.
-
-Jos alias on tyhjä ja painetaan "muuta tietoja", niin alias ei muutu tyhjäksi, vaan vanha arvo pidetään.
-
-Jos salasana on tyhjä ja painetaan "muuta tietoja", niin salasana ei muutu tyhjäksi, vaan vanha arvo pidetään.
-
-Ym. tapauksissa ainoastaan jos kenttiin laitetaan arvoja, niin ne päivitetään tietokantaan.
-
-salasanojen pitää täsmätä keskenään
+- Jos alias on tyhjä ja painetaan "muuta tietoja", niin alias ei muutu tyhjäksi, vaan vanha arvo pidetään.
+- Jos salasana on tyhjä ja painetaan "muuta tietoja", niin salasana ei muutu tyhjäksi, vaan vanha arvo pidetään.
+- Ym. tapauksissa ainoastaan jos kenttiin laitetaan arvoja, niin ne päivitetään tietokantaan.
+- salasanojen pitää täsmätä keskenään
 
 6. source -sivu
 
-Täällä käyttäjä näkee omat henk. koht. rahalähteensä ja voi 
+Täällä käyttäjä näkee omat henk. koht. rahalähteensä ja voi
 - poistaa
-- muokata rahalähdettä (WIP @ 17.8.2018)
-
+- muokata rahalähdettä
 Tämän lisäksi käyttäjä voi lisätä uuden rahalähteen (linkki: lisää rahalähde)
 
-7. source/add -sivu
+7.	source/add -sivu
 
 Täällä käyttäjä voi lisätä uuden rahalähteen
-
 - nimi ei saa olla tyhjä
 - lisätietoja on valinnainen kenttä
-
 Lisää rahalähde --> vie uuden tietueen kantaan Moneysource-tauluun
+
+8. source/modify –sivu
+Periaatteessa sama toiminta kuin source/add –sivulla, mutta tässä muokattavan rahalähteen tiedot tuodaan automaattisesti kenttiin (rahalähteen nimi, lisätietoja)
+
+9. transactions/add –sivu
+
+Tällä sivulla käyttäjä voi lisätä menon tai tulon per rahalähde
+- päivämäärän pitää olla muodossa pp.kk.vvvv
+- määrän tulee olla numeerinen arvo (desimaalit erotetaan pisteellä!)
+- jos ”onko tulo”-checkbox on valittuna, niin tämä tarkoittaa että kyseessä on tulo ja se viedään transactions-tauluun positiivisena numeroarvona; muussa tapauksessa numeroarvo muutetaan automaattisesti negatiiviseksi arvoksi
+- kohteessa pitää olla tekstiä
+Lisäyksen jälkeen käyttäjä ohjataan /booking –sivulle. Jos ym. syötteissä on vikaa, niin käyttäjää muistutaan asiasta virheilmoituksella.
+
+10. transaction/modify –sivu
+
+Toimii kuten transaction/add –sivu, mutta jo aiemmin täytetyt arvot populoidaan annettuihin kenttiin.
+Tälle sivulle pääsee booking-sivun kautta ( muokkaa)
+
+11. saldo-sivu
+
+Yhteenvetosivu, jossa näytetään kunkin rahalähteen viimeisin saldo ja kaikki saldomerkinnät.
+Saldomerkintöjä voi muokata ja poistaa tämän sivun kautta.
+muokkaus -> saldo/modify
+poisto -> saldo/remove
+
+12. saldo/add-sivu
+
+Tällä sivulla annetaan saldomerkinnän päivämäärä ja rahamäärä sekä myös rahalähde.
+- päivämäärän tulee olla muotoa pp.kk.vvvv
+- rahamäärän tulee olla numeerinen arvo
+Jos ym. validoinnit eivät mene läpi, käyttäjälle ilmoitetaan asiasta.
+
+13. budget-sivu
+
+Tällä sivulla näytetään kaikki tehdyt budjetit ja jokaista budjettimerkintää voi muokata (budget/modify) ja budjettimerkinnän voi myös poistaa (budget/remove)
+Uuden budjetin lisäys onnistuu ”lisää uusi budjetti”-linkistä, joka ohjaa käyttäjän budget/add –sivulle.
+Kenttien validoinnit:
+- Budjetilla pitää olla nimi
+- määrän pitää olla numeerinen arvo
+- aloitus- ja lopetusmäärän pitää olla muodossa pp.kk.vvvv
+
+14. menojen ja tulojen raportointi
+
+Ohjaa sivulle reporting/0. Tuo nolla indikoi tässä sitä, että menot ja tulot per kuukausi näytetään koskien kaikkia rahalähteitä.
+Vasemmalla sivupaneelissa on linkit jokaiseen rahalähteeseen ja niitä painamalla avautuu kuukausittainen meno/tulo-raportti koskien ko. valittua rahalähdettä.
+
+15. Saldoseurannan raportointi
+
+Tämä siis toimii tällä logiikalla. Oletetaan, että käyttäjällä on vaikka palkkapäivä 15.8. ja palkalla pitäisi elellä seuraavaan palkkapäivään asti, eli 15.9.. Käyttäjä saa palkkaa 2500 euroa esim. Nordean tililleen ja käyttäjä tekee budjetin välille 15.8. – 15.9.2018 ja budjetin suuruus on 2500 euroa ja budjetin rahalähteenä toimii Nordea. Käyttäjä antaa budjetilleen nimen ”elo-syys”.
+Saldoseurannan raportoinnissa näkyy vasemmalla nyt elo-syys –linkki. Jos sen avaa, niin saldoseurannan raportti tulee näkyviin; budjetti ”elo-syys” vs. toteutuneet saldot.
+Raportissa näkyy budjetin ”elo-syys” kaikki päivämäärät (järjestetty nousevasti päivämäärän mukaan), toteutunut saldo –sarake, jossa näkyy aikavälille annetut saldomerkinnät lihavoituna ja niille päiville mitä saldoa ei ole annettu, niin nämä arvioidaan laskutoimituksen perusteella (eli trendin mukaan). Raportilla näkyy myös ”laskettu saldo” –sarake, jossa näkyy budjetille annettu rahamäärä, eli tässä tapauksessa 2500 euroa. Sitten joka riville tulee jokaiselle päivälle laskettu saldo sillä perusteella, että budjetin viimeisenä päivänä käyttäjällä on rahaa 0 euroa.
+Tästä käyttäjä voi päätellä, että miten hänen saldonsa muuttuminen korreloi lasketun saldon kanssa.
